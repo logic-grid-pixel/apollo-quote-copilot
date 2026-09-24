@@ -1,0 +1,112 @@
+{
+  "scenario": "conflicting-seats",
+  "source_files": [
+    "data/deals/conflicting-seats/C1_2026-07-29_discovery.md",
+    "data/deals/conflicting-seats/C2_2026-08-14_technical-evaluation.md",
+    "data/deals/conflicting-seats/C3_2026-09-04_commercial-review.md",
+    "data/deals/conflicting-seats/rep_notes.md"
+  ],
+  "account_domain": {
+    "value": "postman.com",
+    "source_citation": "rep_notes: \"Acct: Postman (postman.com)\"",
+    "confidence": "high"
+  },
+  "company_name": {
+    "value": "Postman",
+    "source_citation": "rep_notes: \"Acct: Postman (postman.com)\"",
+    "confidence": "high"
+  },
+  "rep_stated_segment": {
+    "value": "Mid-Market",
+    "source_citation": "rep_notes: \"Seg: Mid-Market\"",
+    "confidence": "high"
+  },
+  "products": {
+    "value": [
+      {
+        "name": "Platform Pro",
+        "quantity": 1
+      },
+      {
+        "name": "Additional Seats",
+        "quantity": null
+      }
+    ],
+    "source_citation": "C3 [00:04:57] \"So, two-year term, Pro, which is what we talked about. That's fine.\"",
+    "confidence": "high"
+  },
+  "seat_count": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "term_months": {
+    "value": 24,
+    "source_citation": "C2 [00:42:02] \"We'd want a two-year term.\" | C3 [00:04:57] \"So, two-year term, Pro\"",
+    "confidence": "high"
+  },
+  "start_date": {
+    "value": "2026-10-01",
+    "source_citation": "C3 [00:08:32] \"And the start date — still October 1?\" | C3 [00:08:44] \"Still October 1. Top of the quarter. That hasn't moved.\"",
+    "confidence": "high"
+  },
+  "payment_terms": {
+    "value": "net30",
+    "source_citation": "C3 [00:05:39] \"Net 30 is fine, that's what we do.\"",
+    "confidence": "high"
+  },
+  "requested_discount_pct": {
+    "value": 15,
+    "source_citation": "C3 [00:06:02] \"I'd like to see 15 percent off.\"",
+    "confidence": "high"
+  },
+  "ramp": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "company_headcount": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "contacts": {
+    "value": [
+      {
+        "name": "Priya Raghunathan",
+        "title": "VP Engineering",
+        "buying_role": "Economic Buyer"
+      },
+      {
+        "name": "Tom Abara",
+        "title": "Staff Engineer",
+        "buying_role": "Technical Evaluator"
+      }
+    ],
+    "source_citation": "C2 [header] \"Priya Raghunathan, VP Engineering, Postman\" | C2 [header] \"Tom Abara, Staff Engineer, Postman\" | C3 [00:19:04] \"I can sign up to a certain amount and this is under it. So it's me.\"",
+    "confidence": "high"
+  },
+  "open_questions": [
+    {
+      "field": "seat_count",
+      "blocking": true,
+      "text": "Seat count conflicts and was never reconciled: ~50 engineers (C1, hedged, 'need to check internally') vs ~80 people across platform and data after the reorg (C3); confirm the year-1 named-user seat count (also sets the Additional Seats quantity).",
+      "candidates": [
+        {
+          "value": 50,
+          "source_citation": "C1 [00:10:27] \"it's roughly 50 engineers who'd need access. Somewhere around there.\""
+        },
+        {
+          "value": 80,
+          "source_citation": "C3 [00:09:11] \"it's more like 80 people across platform and data\""
+        }
+      ]
+    },
+    {
+      "field": "products",
+      "blocking": true,
+      "text": "Additional Seats quantity is unknown until seat_count is resolved (50 vs 80).",
+      "source_citation": "C3 [00:09:11] \"it's more like 80 people across platform and data\""
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "_source": "eval/specs/mis-segmented.yaml",
+  "_note": "Golden values from the spec (hand-written); citations not scored.",
+  "_unscored": [
+    "company_name"
+  ],
+  "scenario": "mis-segmented",
+  "account_domain": {
+    "value": "mongodb.com",
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "company_name": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "rep_stated_segment": {
+    "value": "SMB",
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "products": {
+    "value": [
+      {
+        "name": "Platform Pro",
+        "quantity": 1
+      },
+      {
+        "name": "Additional Seats",
+        "quantity": 60
+      }
+    ],
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "seat_count": {
+    "value": 60,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "term_months": {
+    "value": 12,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "start_date": {
+    "value": "2027-01-05",
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "payment_terms": {
+    "value": "net30",
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "requested_discount_pct": {
+    "value": 18,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "ramp": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "company_headcount": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "contacts": {
+    "value": [
+      {
+        "title": "Engineering Manager",
+        "buying_role": "Champion"
+      },
+      {
+        "title": "Procurement Analyst",
+        "buying_role": "Procurement"
+      }
+    ],
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "open_questions": [
+    {
+      "field": "economic_buyer",
+      "text": "No economic buyer identified; Sam has a budget line but procurement threshold is unknown",
+      "blocking": false
+    }
+  ]
+}

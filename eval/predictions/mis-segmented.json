@@ -1,0 +1,96 @@
+{
+  "scenario": "mis-segmented",
+  "source_files": [
+    "data/deals/mis-segmented/C1_2026-08-05_discovery.md",
+    "data/deals/mis-segmented/C2_2026-08-21_commercials.md",
+    "data/deals/mis-segmented/rep_notes.md"
+  ],
+  "account_domain": {
+    "value": "mongodb.com",
+    "source_citation": "rep_notes: \"Acct: MongoDB (mongodb.com)\"",
+    "confidence": "high"
+  },
+  "company_name": {
+    "value": "MongoDB",
+    "source_citation": "rep_notes: \"Acct: MongoDB (mongodb.com)\"",
+    "confidence": "high"
+  },
+  "rep_stated_segment": {
+    "value": "SMB",
+    "source_citation": "rep_notes: \"Seg: SMB\"",
+    "confidence": "high"
+  },
+  "products": {
+    "value": [
+      {
+        "name": "Platform Pro",
+        "quantity": 1
+      },
+      {
+        "name": "Additional Seats",
+        "quantity": 60
+      }
+    ],
+    "source_citation": "C2 [00:26:44] \"Twelve months, Pro tier, 60 seats.\"",
+    "confidence": "high"
+  },
+  "seat_count": {
+    "value": 60,
+    "source_citation": "C1 [00:12:43] \"So I was thinking 60 seats.\" | C2 [00:26:44] \"Twelve months, Pro tier, 60 seats.\"",
+    "confidence": "high"
+  },
+  "term_months": {
+    "value": 12,
+    "source_citation": "C2 [00:09:40] \"Twelve months to start.\" | C2 [00:26:44] \"Twelve months, Pro tier, 60 seats.\"",
+    "confidence": "high"
+  },
+  "start_date": {
+    "value": "2027-01-05",
+    "source_citation": "C2 [00:13:11] \"So I was thinking we start right after everyone's back from the break. January 5.\" | C2 [00:32:56] \"January 5.\"",
+    "confidence": "high"
+  },
+  "payment_terms": {
+    "value": "net30",
+    "source_citation": "C2 [00:32:33] \"Net 30.\" | C2 [00:32:36] \"Net 30 is standard for us, that's fine.\"",
+    "confidence": "high"
+  },
+  "requested_discount_pct": {
+    "value": 18,
+    "source_citation": "C2 [00:06:36] \"if you could do 18 percent off\" | C2 [00:33:44] \"I asked for 18 percent off.\"",
+    "confidence": "high"
+  },
+  "ramp": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "company_headcount": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "contacts": {
+    "value": [
+      {
+        "name": "Sam Devarakonda",
+        "title": "Engineering Manager, Platform",
+        "buying_role": "Champion"
+      },
+      {
+        "name": "Reena Kapoor",
+        "title": "Procurement Analyst",
+        "buying_role": "Procurement"
+      }
+    ],
+    "source_citation": "C2 [header] \"Sam Devarakonda, Engineering Manager, Platform, MongoDB\" | C2 [header] \"Reena Kapoor, Procurement Analyst, MongoDB\"",
+    "confidence": "high"
+  },
+  "open_questions": [
+    {
+      "field": "economic_buyer",
+      "blocking": false,
+      "text": "Economic buyer not identified: purchase request goes to Sam's (unnamed) director for approval, then procurement; director has not been met.",
+      "source_citation": "C2 [00:36:10] \"Then it goes to your director for approval, and then to me.\""
+    }
+  ]
+}

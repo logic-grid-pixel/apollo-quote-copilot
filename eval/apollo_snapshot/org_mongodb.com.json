@@ -1,0 +1,8 @@
+{
+  "_note": "Minimal snapshot of Apollo organization enrichment (name, domain, employee count only) so tests and the eval run on a fresh clone without Apollo credits. Full responses live in the gitignored data/cache/.",
+  "organization": {
+    "name": "MongoDB",
+    "primary_domain": "mongodb.com",
+    "estimated_num_employees": 5700
+  }
+}

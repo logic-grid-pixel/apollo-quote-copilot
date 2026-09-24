@@ -1,0 +1,75 @@
+# Quote Copilot product catalog and per-segment list prices (USD, annual unless noted).
+# Source of truth for scripts/setup_pricebooks.py and scripts/pricing.py. Edit here,
+# then re-run setup_pricebooks.py so Salesforce matches.
+#
+# billing: annual   -> priced per year of the term (prorated by months for a partial year)
+#          one_time -> charged once, in year 1; excluded from ACV
+#
+# Platform tiers include no seats: every named user is sold as Additional Seats.
+#
+# Segment pricing logic:
+#   Platform tiers and seats: larger segments get a lower list price (volume).
+#   Premium Support and Implementation: larger segments cost more (scope/complexity).
+
+products:
+  - name: Platform Starter
+    code: PLAT-STARTER
+    unit: Each
+    billing: annual
+    description: Core platform, entry tier. Annual subscription. Users sold as Additional Seats.
+  - name: Platform Pro
+    code: PLAT-PRO
+    unit: Each
+    billing: annual
+    description: Core platform, professional tier. Annual subscription. Users sold as Additional Seats.
+  - name: Platform Enterprise
+    code: PLAT-ENT
+    unit: Each
+    billing: annual
+    description: Core platform, enterprise tier with SSO and audit logs. Annual subscription. Users sold as Additional Seats.
+  - name: Additional Seats
+    code: ADD-SEAT
+    unit: Seat
+    billing: annual
+    description: Named user seat. Per seat, per year.
+  - name: Premium Support
+    code: SUP-PREM
+    unit: Each
+    billing: annual
+    description: 24x7 support with 1-hour P1 response and a named support engineer. Annual.
+  - name: Implementation Services
+    code: SVC-IMPL
+    unit: Each
+    billing: one_time
+    description: One-time onboarding, configuration and data migration engagement.
+
+# Standard Price Book entry is required by Salesforce before any custom book entry.
+price_books:
+  Standard Price Book:
+    Platform Starter: 12000
+    Platform Pro: 36000
+    Platform Enterprise: 96000
+    Additional Seats: 600
+    Premium Support: 18000
+    Implementation Services: 25000
+  SMB:
+    Platform Starter: 12000
+    Platform Pro: 36000
+    Platform Enterprise: 96000
+    Additional Seats: 600
+    Premium Support: 12000
+    Implementation Services: 10000
+  Mid-Market:
+    Platform Starter: 11400
+    Platform Pro: 34200
+    Platform Enterprise: 91200
+    Additional Seats: 540
+    Premium Support: 18000
+    Implementation Services: 25000
+  Enterprise:
+    Platform Starter: 10800
+    Platform Pro: 32400
+    Platform Enterprise: 86400
+    Additional Seats: 480
+    Premium Support: 30000
+    Implementation Services: 60000

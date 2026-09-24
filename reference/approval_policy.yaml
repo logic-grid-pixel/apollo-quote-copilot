@@ -1,0 +1,77 @@
+# Discount approval policy. Single source of truth for:
+#   - Quote pre-flight (scripts/preflight.py -> Approval_Level_Required__c,
+#     Preflight_Status__c, thresholds_breached)
+#   - Approver_Level__c on seeded Opportunities (scripts/seed_opportunities.py)
+# No script hardcodes these numbers; change them here and re-run.
+#
+# PLACEHOLDER VALUES: every number below is a placeholder to confirm with Deal Desk.
+#
+# All percentages are effective (blended) discounts off list, as computed by
+# scripts/pricing.py. Upper bounds are INCLUSIVE and compared on the exact value:
+# 12.00% in Mid-Market is Rep, 12.01% is Manager.
+
+# Approval authority, lowest to highest.
+levels: [Rep, Manager, VP, CFO]
+
+# Per-segment discount bands. The first band whose max_discount_pct is >= the
+# discount sets the approval level. ceiling_pct must equal the last band's max.
+segments:
+  SMB:
+    bands:
+      - {level: Rep,     max_discount_pct: 10}
+      - {level: Manager, max_discount_pct: 20}
+      - {level: VP,      max_discount_pct: 25}
+    ceiling_pct: 25
+  Mid-Market:
+    bands:
+      - {level: Rep,     max_discount_pct: 12}
+      - {level: Manager, max_discount_pct: 20}
+      - {level: VP,      max_discount_pct: 30}
+    ceiling_pct: 30
+  Enterprise:
+    bands:
+      - {level: Rep,     max_discount_pct: 20}
+      - {level: Manager, max_discount_pct: 28}
+      - {level: VP,      max_discount_pct: 35}
+    ceiling_pct: 35
+
+# Above a segment's ceiling: CFO approval, and the discount_band threshold is breached.
+above_ceiling:
+  level: CFO
+  threshold: discount_band
+
+# Payment terms longer than standard breach payment_terms and need at least VP.
+# Terms that cannot be read as "net N" are treated as non-standard.
+payment_terms:
+  standard: net30
+  standard_max_days: 30
+  threshold: payment_terms
+  min_level: VP
+
+# Rep segment differs from the Apollo-verified segment: Deal Desk reviews the
+# quote (status at least Needs Approval) and bands use the VERIFIED segment.
+segment_mismatch:
+  min_status: Needs Approval
+  bands_from: verified
+
+# Apollo has no headcount for the account: Verified_Segment__c = Unverified,
+# bands use the rep's segment, and Deal Desk reviews it.
+unverified_segment:
+  min_status: Needs Approval
+  bands_from: rep
+
+# A null value or a blocking open question on any of these fields means the
+# quote cannot be priced or sent: status Blocked on Open Questions.
+pricing_critical_fields:
+  - products
+  - seat_count
+  - term_months
+  - start_date
+  - requested_discount_pct
+
+# Highest first. Blocked outranks Needs Approval (approval level above Rep, any
+# threshold breached, or a segment mismatch), which outranks Ready.
+status_precedence:
+  - Blocked on Open Questions
+  - Needs Approval
+  - Ready

@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://quote-copilot.local/schemas/deal_extraction.json",
+  "title": "Quote Copilot deal extraction",
+  "description": "What the model extracts from a deal's discovery-call transcripts (data/deals/<scenario>/C<n>_*.md) and rep notes (rep_notes.md). Written to output/<scenario>/extraction.json and read by scripts/pricing.py, scripts/preflight.py and scripts/sfdc_client.py. Every extracted field is an object {value, source_citation, confidence}. A non-null value MUST carry a citation; a null value (not stated, or conflicting statements) MUST have a null citation. Values are never inferred from indirect evidence, averaged, or picked between conflicting statements: set null and raise an open question instead. Numbers such as prices, totals, ACV/TCV, effective discount, approval level and segment are never extracted or computed here; the scripts compute them.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "account_domain", "company_name", "rep_stated_segment", "products", "seat_count",
+    "term_months", "start_date", "payment_terms", "requested_discount_pct", "ramp",
+    "company_headcount", "contacts", "open_questions"
+  ],
+  "properties": {
+    "scenario": {
+      "description": "Optional metadata: the deal folder name under data/deals/ (e.g. clean-midmarket).",
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "source_files": {
+      "description": "Optional metadata: the files read, relative to the project root (e.g. data/deals/clean-midmarket/C1_2026-08-12_discovery.md).",
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "account_domain": {
+      "description": "Customer's primary web domain, lowercase, no scheme or www (e.g. retool.com). Used for the Apollo lookup that sets the verified segment.",
+      "$ref": "#/$defs/field",
+      "properties": {"value": {"type": ["string", "null"], "pattern": "^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$"}}
+    },
+    "company_name": {
+      "description": "Customer company name as written in the rep notes or transcripts.",
+      "$ref": "#/$defs/field",
+      "properties": {"value": {"type": ["string", "null"], "minLength": 1}}
+    },
+    "rep_stated_segment": {
+      "description": "The segment the REP assigned (rep_notes 'Seg:' line). Context only: the pre-flight compares it with the Apollo-verified segment. Never derived from team size or tone.",
+      "$ref": "#/$defs/field",
+      "properties": {"value": {"enum": ["SMB", "Mid-Market", "Enterprise", null]}}
+    },
+    "products": {
+      "description": "Products the customer asked for, by exact price-book name. Platform tiers include no users; named users are 'Additional Seats' with quantity = year-1 seat count (or null when the seat count is null/conflicting). quantity null for an 'Each' product means one subscription. Omit products the customer declined.",
+      "$ref": "#/$defs/field",
+      "properties": {"value": {
+        "type": ["array", "null"],
+        "minItems": 1,
+        "items": {"$ref": "#/$defs/product"}
+      }}
+    },
+    "seat_count": {
+      "description": "Named-user seats in year 1, as stated by the customer. Integer. Null if never stated or if different values were stated and never reconciled (raise a blocking open question with both candidates).",
+      "$ref": "#/$defs/field",
+      "properties": {"value": {"type": ["integer", "null"], "minimum": 1}}
+    },
+    "term_months": {
+      "description": "Contract term in months (two-year = 24). Integer 1-120.",
+      "$ref": "#/$defs/field",
+      "properties": {"value": {"type": ["integer", "null"], "minimum": 1, "maximum": 120}}
+    },
+    "start_date": {
+      "description": "Subscription start date, ISO 8601 (YYYY-MM-DD), only when a date is stated. Never inferred from call dates, fiscal quarters or dependencies ('after security review' is null + blocking open question).",
+      "$ref": "#/$defs/field",
+      "properties": {"value": {"type": ["string", "null"], "format": "date", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"}}
+    },
+    "payment_terms": {
+      "description": "Payment terms the customer requires. Net terms are normalised to 'net<N>' lowercase without a space (net30, net60). Any other terms are written as stated; the pre-flight treats terms it cannot read as net N as non-standard.",
+      "$ref": "#/$defs/field",
+      "properties": {"value": {"type": ["string", "null"], "minLength": 1}}
+    },
+    "requested_discount_pct": {
+      "description": "Discount off list the customer asked for, in percent (12 means 12%). A number 0-100 as stated; never an effective or blended discount (pricing.py computes that).",
+      "$ref": "#/$defs/field",
+      "properties": {"value": {"type": ["number", "null"], "minimum": 0, "maximum": 100}}
+    },
+    "ramp": {
+      "description": "Seat ramp across years, or null when seats are flat for the term. One step per contract year starting at year 1; year 1 seats must equal seat_count.",
+      "$ref": "#/$defs/field",
+      "properties": {"value": {
+        "type": ["array", "null"],
+        "minItems": 2,
+        "items": {"$ref": "#/$defs/ramp_step"}
+      }}
+    },
+    "company_headcount": {
+      "description": "Total employees of the customer COMPANY, only if someone states it. A team, org or buying-group size is NOT company headcount. Usually null: Apollo is the authority for headcount.",
+      "$ref": "#/$defs/field",
+      "properties": {"value": {"type": ["integer", "null"], "minimum": 1}}
+    },
+    "contacts": {
+      "description": "Customer-side people on the calls or in the notes (never the vendor's reps), with job title and buying role.",
+      "$ref": "#/$defs/field",
+      "properties": {"value": {
+        "type": ["array", "null"],
+        "items": {"$ref": "#/$defs/contact"}
+      }}
+    },
+    "open_questions": {
+      "description": "Everything unresolved that the rep must answer. Required; may be empty. A null pricing-critical field (products, seat_count, term_months, start_date, requested_discount_pct; see reference/approval_policy.yaml) always has a blocking question.",
+      "type": "array",
+      "items": {"$ref": "#/$defs/open_question"}
+    }
+  },
+  "$defs": {
+    "citation": {
+      "description": "One or more citations joined by ' | '. Each is either a transcript citation C<n> [HH:MM:SS] \"<verbatim excerpt>\" (the call id from the file name and the turn's timestamp, e.g. C3 [00:09:11] \"…more like 80 people…\"), a transcript header citation C<n> [header] \"<verbatim excerpt>\" (participants list), or a rep-notes citation rep_notes: \"<verbatim excerpt>\". Excerpts are copied verbatim from that turn / line; '…' marks elided text; double quotes inside an excerpt are written as single quotes.",
+      "type": "string",
+      "pattern": "^(C[1-9][0-9]* \\[([0-9]{2}:[0-9]{2}:[0-9]{2}|header)\\]|rep_notes:) \"[^\"]+\"( \\| (C[1-9][0-9]* \\[([0-9]{2}:[0-9]{2}:[0-9]{2}|header)\\]|rep_notes:) \"[^\"]+\")*$"
+    },
+    "field": {
+      "description": "An extracted field: value (typed per field, null when not stated or unresolved), source_citation (see $defs/citation; null exactly when value is null), confidence (high = stated plainly; medium = stated but approximate or hedged; low = weakly supported).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "source_citation", "confidence"],
+      "properties": {
+        "value": true,
+        "source_citation": {"anyOf": [{"$ref": "#/$defs/citation"}, {"type": "null"}]},
+        "confidence": {"enum": ["high", "medium", "low"]}
+      },
+      "if": {"properties": {"value": {"type": "null"}}},
+      "then": {"properties": {"source_citation": {"type": "null"}}},
+      "else": {"properties": {"source_citation": {"$ref": "#/$defs/citation"}}}
+    },
+    "product": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "quantity"],
+      "properties": {
+        "name": {
+          "description": "Exact product name from reference/price_books.yaml.",
+          "enum": ["Platform Starter", "Platform Pro", "Platform Enterprise", "Additional Seats",
+                   "Premium Support", "Implementation Services"]
+        },
+        "quantity": {"type": ["integer", "null"], "minimum": 1}
+      }
+    },
+    "ramp_step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["year", "seats"],
+      "properties": {
+        "year": {"type": "integer", "minimum": 1, "maximum": 10},
+        "seats": {"type": "integer", "minimum": 1}
+      }
+    },
+    "contact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "buying_role"],
+      "properties": {
+        "name": {"description": "Optional: the person's name as written.", "type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "buying_role": {"enum": ["Economic Buyer", "Champion", "Technical Evaluator", "Procurement", "End User"]}
+      }
+    },
+    "open_question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field", "text", "blocking"],
+      "properties": {
+        "field": {
+          "description": "The extraction field the question is about (e.g. seat_count, start_date) or another snake_case topic (e.g. economic_buyer).",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "text": {"description": "The question or gap in one sentence, naming the stated values and where they came from.", "type": "string", "minLength": 1},
+        "blocking": {"description": "true when the quote cannot be priced or sent until it is answered (any pricing-critical field).", "type": "boolean"},
+        "source_citation": {"description": "Optional: where the gap shows (e.g. the dependency statement).", "anyOf": [{"$ref": "#/$defs/citation"}, {"type": "null"}]},
+        "candidates": {
+          "description": "For conflicting statements: every stated value with its citation. The field's own value must then be null.",
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["value", "source_citation"],
+            "properties": {
+              "value": {"not": {"type": "null"}},
+              "source_citation": {"$ref": "#/$defs/citation"}
+            }
+          }
+        }
+      }
+    }
+  }
+}

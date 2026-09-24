@@ -1,0 +1,80 @@
+# Scenario 1 of 4 — the happy path.
+# Proves: discovery notes become a quote and order form with no human blockers.
+# This is the baseline. If this one needs an open question or an escalation,
+# something is wrong with the pre-flight, not with the deal.
+
+scenario: clean-midmarket
+account_domain: retool.com            # a seeded account, 200-2000 employees
+rep: Alex Chen
+
+# What the rep believes going in. Written into Rep_Segment__c.
+rep_stated_segment: Mid-Market
+
+calls:
+  - id: C1
+    date: 2026-08-12
+    type: Discovery
+    duration_min: 34
+    participants:
+      - Alex Chen (AE)
+      - Dana Whitfield (Director of Platform Engineering)
+    tone: >
+      First real call. Customer is organised and has already scoped the
+      problem internally. Friendly, efficient, slightly rushed at the end
+      because they have another meeting.
+    facts_to_embed:
+      - "about 120 engineers would need access"
+      - "current tooling is a mix of scripts and a legacy vendor they are leaving"
+      - "budget is approved for this fiscal year"
+      - "they want the Pro tier, not the entry tier"
+
+  - id: C2
+    date: 2026-08-26
+    type: Technical deep-dive and commercials
+    duration_min: 47
+    participants:
+      - Alex Chen (AE)
+      - Dana Whitfield (Director of Platform Engineering)
+      - Marcus Oyelaran (VP Engineering, joins 10 minutes late)
+    tone: >
+      Marcus joins late and asks Dana to recap. Some back-and-forth on
+      onboarding timeline. Commercials are discussed openly and without
+      friction.
+    facts_to_embed:
+      - "two year term, they do not want to re-paper annually"
+      - "standard net 30 payment terms are fine"
+      - "they asked for around 12 percent off list and Alex said that is workable"
+      - "go live on November 1"
+      - "they want the implementation services package"
+      - "Dana confirms 120 seats, same number as the first call"
+
+planted_defects: []               # deliberately none
+
+expected_extraction:
+  products:
+    - name: Platform Pro
+      quantity: 1
+    - name: Additional Seats
+      quantity: 120
+    - name: Implementation Services
+      quantity: 1
+  term_months: 24
+  start_date: 2026-11-01
+  payment_terms: net30
+  requested_discount_pct: 12
+  seat_count: 120
+  ramp: null
+  contacts:
+    - title: Director of Platform Engineering
+      buying_role: Champion
+    - title: VP Engineering
+      buying_role: Economic Buyer
+
+expected_open_questions: []
+
+expected_preflight:
+  verified_segment: Mid-Market
+  segment_mismatch: false
+  approval_level_required: Rep    # 12% sits inside the Mid-Market rep band
+  preflight_status: Ready
+  thresholds_breached: []

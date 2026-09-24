@@ -1,0 +1,92 @@
+{
+  "_source": "eval/specs/clean-midmarket.yaml",
+  "_note": "Golden values from the spec (hand-written); citations not scored.",
+  "_unscored": [
+    "company_name",
+    "company_headcount"
+  ],
+  "scenario": "clean-midmarket",
+  "account_domain": {
+    "value": "retool.com",
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "company_name": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "rep_stated_segment": {
+    "value": "Mid-Market",
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "products": {
+    "value": [
+      {
+        "name": "Platform Pro",
+        "quantity": 1
+      },
+      {
+        "name": "Additional Seats",
+        "quantity": 120
+      },
+      {
+        "name": "Implementation Services",
+        "quantity": 1
+      }
+    ],
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "seat_count": {
+    "value": 120,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "term_months": {
+    "value": 24,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "start_date": {
+    "value": "2026-11-01",
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "payment_terms": {
+    "value": "net30",
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "requested_discount_pct": {
+    "value": 12,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "ramp": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "company_headcount": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "contacts": {
+    "value": [
+      {
+        "title": "Director of Platform Engineering",
+        "buying_role": "Champion"
+      },
+      {
+        "title": "VP Engineering",
+        "buying_role": "Economic Buyer"
+      }
+    ],
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "open_questions": []
+}

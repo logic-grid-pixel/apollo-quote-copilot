@@ -1,0 +1,111 @@
+# Scenario 3 of 4 — the mis-segment.
+# Proves: Apollo enrichment overrides what the rep assumed, which changes both
+# the price book and the discount band.
+#
+# The realistic version of this is not a rep lying. It is a rep quoting the
+# buying team they can see — a 40-person platform group — inside a 5,000-person
+# company. Everything the customer says is true. The inference is wrong.
+#
+# CRITICAL when generating transcripts: the customer must never state a company
+# headcount. The only headcount language is about their own team. Apollo is the
+# sole source of the real number.
+
+scenario: mis-segmented
+account_domain: mongodb.com            # a seeded account, 4000+ employees on Apollo
+rep: Jordan Mwangi
+
+rep_stated_segment: SMB           # the wrong call, made in good faith
+
+calls:
+  - id: C1
+    date: 2026-08-05
+    type: Discovery
+    duration_min: 38
+    participants:
+      - Jordan Mwangi (AE)
+      - Sam Devarakonda (Engineering Manager, Platform)
+    tone: >
+      Sam is hands-on and speaks only about their own group. Refers to "our
+      little team" and "we operate pretty independently". Warm, informal.
+      Nothing said is untrue.
+    facts_to_embed:
+      - "the platform group is about 40 people and operates fairly independently"
+      - "they want 60 seats to leave room for the adjacent SRE group"
+      - "they have their own budget line for tooling"
+      - "procurement has to sign off on anything over a threshold, Sam is not sure what it is"
+
+  - id: C2
+    date: 2026-08-21
+    type: Commercials
+    duration_min: 41
+    participants:
+      - Jordan Mwangi (AE)
+      - Sam Devarakonda (Engineering Manager, Platform)
+      - Reena Kapoor (Procurement Analyst, joins for the last 15 minutes)
+    tone: >
+      Reena joining is the tell that this is a larger organisation: she
+      references a standard vendor onboarding process, a security review, and
+      a master agreement. Sam is mildly surprised by how much process there is.
+    facts_to_embed:
+      - "Reena mentions the standard vendor security review takes about three weeks"
+      - "there is an existing master agreement template they prefer to use"
+      - "12 month term to start, they want to prove it out first"
+      - "net 30 is standard for them"
+      - "they are asking for 18 percent off"
+      - "target start date January 5"
+
+planted_defects:
+  - type: inference_trap
+    field: segment
+    note: >
+      "our little team", "we operate pretty independently" and a 40-person
+      group all point at SMB. The rep tagged it SMB. Apollo returns 4,000+
+      employees, so the verified segment is Enterprise. The extraction must
+      not convert team size into company size, and the pre-flight must flag
+      the mismatch rather than trusting the rep.
+  - type: signal
+    field: procurement_process
+    note: >
+      Reena's presence and the master agreement reference are corroborating
+      signals that this is an enterprise buyer. Worth surfacing in the deal
+      brief even though Apollo is the authority.
+
+expected_extraction:
+  products:
+    - name: Platform Pro
+      quantity: 1
+    - name: Additional Seats
+      quantity: 60
+  term_months: 12
+  start_date: 2027-01-05
+  payment_terms: net30
+  requested_discount_pct: 18
+  seat_count: 60
+  ramp: null
+  company_headcount: null         # never stated on any call — Apollo only
+  contacts:
+    - title: Engineering Manager
+      buying_role: Champion
+    - title: Procurement Analyst
+      buying_role: Procurement
+
+expected_open_questions:
+  - field: economic_buyer
+    text: "No economic buyer identified; Sam has a budget line but procurement threshold is unknown"
+    blocking: false
+
+expected_preflight:
+  rep_segment: SMB
+  verified_segment: Enterprise
+  segment_mismatch: true
+  approval_level_required: Rep    # 18% is inside the Enterprise rep band,
+                                  # but would have breached the SMB band
+  preflight_status: Needs Approval
+  thresholds_breached: []
+  note: >
+    The interesting result is that the correction cuts both ways. Under the
+    rep's SMB assumption, 18% needs Manager approval. Under the verified
+    Enterprise segment it does not — but the Enterprise price book has higher
+    list prices, so the quote total changes. The demo point is that segment
+    drives both the band and the price book, and getting it from the rep's
+    impression is unreliable in either direction.

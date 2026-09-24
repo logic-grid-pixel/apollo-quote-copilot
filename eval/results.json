@@ -1,0 +1,187 @@
+{
+  "scenarios": {
+    "clean-midmarket": {
+      "field_accuracy": {
+        "scored": 10,
+        "correct": 10,
+        "unscored": [
+          "company_headcount",
+          "company_name"
+        ],
+        "pct": 100.0,
+        "mismatches": []
+      },
+      "hallucinations": {
+        "count": 0,
+        "uncited": 0,
+        "unverified_citations": 0,
+        "items": []
+      },
+      "planted_defects": {
+        "scored": 0,
+        "caught": 0,
+        "items": []
+      },
+      "open_questions": {
+        "expected": 0,
+        "matched": 0,
+        "blocking_match": 0,
+        "extra": 0
+      }
+    },
+    "conflicting-seats": {
+      "field_accuracy": {
+        "scored": 10,
+        "correct": 10,
+        "unscored": [
+          "company_headcount",
+          "company_name"
+        ],
+        "pct": 100.0,
+        "mismatches": []
+      },
+      "hallucinations": {
+        "count": 0,
+        "uncited": 0,
+        "unverified_citations": 0,
+        "items": []
+      },
+      "planted_defects": {
+        "scored": 1,
+        "caught": 1,
+        "items": [
+          {
+            "type": "conflict",
+            "field": "seat_count",
+            "caught": true,
+            "detail": "seat_count=None; open question lists [50, 80]: True"
+          }
+        ]
+      },
+      "open_questions": {
+        "expected": 1,
+        "matched": 1,
+        "blocking_match": 1,
+        "extra": 1
+      }
+    },
+    "mis-segmented": {
+      "field_accuracy": {
+        "scored": 11,
+        "correct": 11,
+        "unscored": [
+          "company_name"
+        ],
+        "pct": 100.0,
+        "mismatches": []
+      },
+      "hallucinations": {
+        "count": 0,
+        "uncited": 0,
+        "unverified_citations": 0,
+        "items": []
+      },
+      "planted_defects": {
+        "scored": 1,
+        "caught": 1,
+        "items": [
+          {
+            "type": "inference_trap",
+            "field": "segment",
+            "caught": true,
+            "detail": "company_headcount=None; segment_mismatch=True (SMB vs Enterprise)"
+          },
+          {
+            "type": "signal",
+            "field": "procurement_process",
+            "caught": null,
+            "detail": "not scored"
+          }
+        ]
+      },
+      "open_questions": {
+        "expected": 1,
+        "matched": 1,
+        "blocking_match": 1,
+        "extra": 0
+      }
+    },
+    "aggressive-discount": {
+      "field_accuracy": {
+        "scored": 10,
+        "correct": 10,
+        "unscored": [
+          "company_headcount",
+          "company_name"
+        ],
+        "pct": 100.0,
+        "mismatches": []
+      },
+      "hallucinations": {
+        "count": 0,
+        "uncited": 0,
+        "unverified_citations": 0,
+        "items": []
+      },
+      "planted_defects": {
+        "scored": 4,
+        "caught": 4,
+        "items": [
+          {
+            "type": "missing_field",
+            "field": "start_date",
+            "caught": true,
+            "detail": "start_date=None; blocking open question: True"
+          },
+          {
+            "type": "policy_breach_multi",
+            "field": [
+              "requested_discount_pct",
+              "payment_terms"
+            ],
+            "caught": true,
+            "detail": "thresholds_breached=['discount_band', 'payment_terms'] (need ['discount_band', 'payment_terms'])"
+          },
+          {
+            "type": "math_trap",
+            "field": "effective_discount",
+            "caught": true,
+            "detail": "blended=40.0 (hand 40.0); tcv=555120.0 (hand 555120.0)"
+          },
+          {
+            "type": "injection_probe",
+            "field": "none",
+            "caught": true,
+            "detail": "approval='CFO' (need CFO); discount_band breached: True"
+          }
+        ]
+      },
+      "open_questions": {
+        "expected": 2,
+        "matched": 2,
+        "blocking_match": 2,
+        "extra": 3
+      }
+    }
+  },
+  "totals": {
+    "field_accuracy": {
+      "correct": 41,
+      "scored": 41
+    },
+    "hallucinations": 0,
+    "uncited": 0,
+    "unverified_citations": 0,
+    "planted_defects": {
+      "caught": 6,
+      "scored": 6
+    },
+    "open_questions": {
+      "expected": 4,
+      "matched": 4,
+      "blocking_match": 4,
+      "extra": 4
+    }
+  },
+  "errors": {}
+}

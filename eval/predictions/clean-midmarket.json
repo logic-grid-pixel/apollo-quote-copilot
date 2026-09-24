@@ -1,0 +1,93 @@
+{
+  "scenario": "clean-midmarket",
+  "source_files": [
+    "data/deals/clean-midmarket/C1_2026-08-12_discovery.md",
+    "data/deals/clean-midmarket/C2_2026-08-26_technical-deep-dive.md",
+    "data/deals/clean-midmarket/rep_notes.md"
+  ],
+  "account_domain": {
+    "value": "retool.com",
+    "source_citation": "rep_notes: \"Acct: Retool (retool.com)\"",
+    "confidence": "high"
+  },
+  "company_name": {
+    "value": "Retool",
+    "source_citation": "rep_notes: \"Acct: Retool (retool.com)\"",
+    "confidence": "high"
+  },
+  "rep_stated_segment": {
+    "value": "Mid-Market",
+    "source_citation": "rep_notes: \"Seg: Mid-Market\"",
+    "confidence": "high"
+  },
+  "products": {
+    "value": [
+      {
+        "name": "Platform Pro",
+        "quantity": 1
+      },
+      {
+        "name": "Additional Seats",
+        "quantity": 120
+      },
+      {
+        "name": "Implementation Services",
+        "quantity": 1
+      }
+    ],
+    "source_citation": "C2 [00:35:13] \"Pro tier, 120 seats, implementation services, two-year term…\" | C2 [00:36:34] \"That's it.\" | C2 [00:28:31] \"Yeah, put it in.\"",
+    "confidence": "high"
+  },
+  "seat_count": {
+    "value": 120,
+    "source_citation": "C1 [00:08:20] \"it's about 120 engineers who'd need access\" | C2 [00:13:42] \"Yeah, 120. Same number I gave Alex on the first call.\"",
+    "confidence": "high"
+  },
+  "term_months": {
+    "value": 24,
+    "source_citation": "C2 [00:29:31] \"Two years. I don't want to re-paper this every twelve months\"",
+    "confidence": "high"
+  },
+  "start_date": {
+    "value": "2026-11-01",
+    "source_citation": "C2 [00:24:22] \"November 1 is the day we're officially on you\" | C2 [00:26:37] \"Subscription starts November 1.\"",
+    "confidence": "high"
+  },
+  "payment_terms": {
+    "value": "net30",
+    "source_citation": "C2 [00:31:03] \"Net 30 is fine.\"",
+    "confidence": "high"
+  },
+  "requested_discount_pct": {
+    "value": 12,
+    "source_citation": "C2 [00:31:57] \"I'd like to see something around 12 percent off list.\"",
+    "confidence": "medium"
+  },
+  "ramp": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "company_headcount": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "contacts": {
+    "value": [
+      {
+        "name": "Dana Whitfield",
+        "title": "Director of Platform Engineering",
+        "buying_role": "Champion"
+      },
+      {
+        "name": "Marcus Oyelaran",
+        "title": "VP Engineering",
+        "buying_role": "Economic Buyer"
+      }
+    ],
+    "source_citation": "C2 [header] \"Dana Whitfield, Director of Platform Engineering, Retool\" | C2 [header] \"Marcus Oyelaran, VP Engineering, Retool\" | C2 [00:36:50] \"I'm the signer.\"",
+    "confidence": "high"
+  },
+  "open_questions": []
+}

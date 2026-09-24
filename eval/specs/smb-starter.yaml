@@ -1,0 +1,92 @@
+# Scenario 5 — SMB, Manager approval.
+# Proves: the SMB band. A small, clean deal whose discount sits above the SMB
+# rep band but inside the Manager band, so the quote routes for approval even
+# though nothing is wrong with the discovery material.
+#
+# Written by Claude (not hand-written by the author like scenarios 1-4).
+# The expected pricing below was calculated by hand from reference/price_books.yaml
+# (SMB book) before any script was run against it — verify it on paper.
+#
+# CRITICAL when generating transcripts: the customer never states a company
+# headcount, only the number of engineers who need access. No weekday names.
+
+scenario: smb-starter
+account_domain: cal.com           # seeded account, 39 employees on Apollo -> SMB
+rep: Alex Chen
+
+rep_stated_segment: SMB
+
+calls:
+  - id: C1
+    date: 2026-09-03
+    type: Discovery
+    duration_min: 30
+    participants:
+      - Alex Chen (AE)
+      - Maya Lindqvist (Co-founder & CEO)
+    tone: >
+      Founder-led buying. Maya is direct, a bit time-pressed, and does her own
+      software purchasing. One tangent about hiring.
+    facts_to_embed:
+      - "about 25 engineers would use it"
+      - "today it is a pile of scripts plus a free tool they have outgrown"
+      - "the entry tier is enough for now, they do not need the bigger plans"
+      - "Maya signs software purchases herself, there is no procurement team"
+
+  - id: C2
+    date: 2026-09-17
+    type: Commercials
+    duration_min: 32
+    participants:
+      - Alex Chen (AE)
+      - Maya Lindqvist (Co-founder & CEO)
+      - Owen Achterberg (Head of Engineering)
+    tone: >
+      Friendly and quick. Owen confirms the technical fit and the seat number.
+      Maya pushes on price as an early-stage company. Alex does not commit to
+      the discount on the call.
+    facts_to_embed:
+      - "Owen confirms 25 seats, same as the first call"
+      - "12 month term; they do not sign multi-year contracts at this stage"
+      - "start on October 19"
+      - "net 30 is fine"
+      - "no implementation package, Owen's team will set it up themselves"
+      - "premium support declined for now"
+      - "Maya asks for 15 percent off; Alex says that is above what he can approve alone and he will take it to his manager"
+
+planted_defects: []               # deliberately none
+
+expected_extraction:
+  products:
+    - name: Platform Starter
+      quantity: 1
+    - name: Additional Seats
+      quantity: 25
+  term_months: 12
+  start_date: 2026-10-19
+  payment_terms: net30
+  requested_discount_pct: 15
+  seat_count: 25
+  ramp: null
+  company_headcount: null         # never stated — Apollo only
+  contacts:
+    - title: Co-founder & CEO
+      buying_role: Economic Buyer
+    - title: Head of Engineering
+      buying_role: Technical Evaluator
+
+expected_open_questions: []
+
+expected_pricing:                 # SMB book, hand-calculated
+  # Platform Starter 12,000 + 25 x Additional Seats 600 (15,000) = 27,000 list
+  list_tcv: 27000.00
+  tcv: 22950.00                   # 27,000 x 0.85
+  acv: 22950.00                   # 12-month term, all recurring
+  blended_discount_pct: 15.00
+
+expected_preflight:
+  verified_segment: SMB
+  segment_mismatch: false
+  approval_level_required: Manager   # 15% is above the SMB rep band (10%), inside Manager (20%)
+  preflight_status: Needs Approval
+  thresholds_breached: []

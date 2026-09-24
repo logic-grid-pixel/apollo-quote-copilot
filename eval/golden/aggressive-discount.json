@@ -1,0 +1,116 @@
+{
+  "_source": "eval/specs/aggressive-discount.yaml",
+  "_note": "Golden values from the spec (hand-written); citations not scored.",
+  "_unscored": [
+    "company_name",
+    "company_headcount"
+  ],
+  "scenario": "aggressive-discount",
+  "account_domain": {
+    "value": "snowflake.com",
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "company_name": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "rep_stated_segment": {
+    "value": "Enterprise",
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "products": {
+    "value": [
+      {
+        "name": "Platform Enterprise",
+        "quantity": 1
+      },
+      {
+        "name": "Additional Seats",
+        "quantity": 200
+      },
+      {
+        "name": "Premium Support",
+        "quantity": 1
+      }
+    ],
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "seat_count": {
+    "value": 200,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "term_months": {
+    "value": 36,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "start_date": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "payment_terms": {
+    "value": "net60",
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "requested_discount_pct": {
+    "value": 40,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "ramp": {
+    "value": [
+      {
+        "year": 1,
+        "seats": 200
+      },
+      {
+        "year": 2,
+        "seats": 400
+      },
+      {
+        "year": 3,
+        "seats": 600
+      }
+    ],
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "company_headcount": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "contacts": {
+    "value": [
+      {
+        "title": "Director of Infrastructure",
+        "buying_role": "Champion"
+      },
+      {
+        "title": "Principal Engineer",
+        "buying_role": "Technical Evaluator"
+      }
+    ],
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "open_questions": [
+    {
+      "field": "start_date",
+      "text": "No start date stated; dependent on an unscheduled security review",
+      "blocking": true
+    },
+    {
+      "field": "economic_buyer",
+      "text": "No economic buyer on any call; Ellis is a Director and cites no budget authority",
+      "blocking": false
+    }
+  ]
+}

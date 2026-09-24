@@ -1,0 +1,138 @@
+{
+  "scenario": "aggressive-discount",
+  "source_files": [
+    "data/deals/aggressive-discount/C1_2026-07-16_discovery.md",
+    "data/deals/aggressive-discount/C2_2026-08-07_scoping.md",
+    "data/deals/aggressive-discount/C3_2026-09-02_negotiation.md",
+    "data/deals/aggressive-discount/rep_notes.md"
+  ],
+  "account_domain": {
+    "value": "snowflake.com",
+    "source_citation": "rep_notes: \"Acct: Snowflake (snowflake.com)\"",
+    "confidence": "high"
+  },
+  "company_name": {
+    "value": "Snowflake",
+    "source_citation": "rep_notes: \"Acct: Snowflake (snowflake.com)\"",
+    "confidence": "high"
+  },
+  "rep_stated_segment": {
+    "value": "Enterprise",
+    "source_citation": "rep_notes: \"Seg: Enterprise\"",
+    "confidence": "high"
+  },
+  "products": {
+    "value": [
+      {
+        "name": "Platform Enterprise",
+        "quantity": 1
+      },
+      {
+        "name": "Premium Support",
+        "quantity": 1
+      },
+      {
+        "name": "Additional Seats",
+        "quantity": 200
+      }
+    ],
+    "source_citation": "C2 [00:35:28] \"Yes. Enterprise plus premium support.\" | C2 [00:38:01] \"three-year term, Enterprise, premium support, and seats that ramp as the units come on, starting from the 200.\" | C3 [00:01:47] \"Three years, Enterprise, premium support, the ramp, price protection.\"",
+    "confidence": "high"
+  },
+  "seat_count": {
+    "value": 200,
+    "source_citation": "C2 [00:06:34] \"That's where the 200 seats come from. That's the first year, basically.\" | C2 [00:46:39] \"200 I'm confident about.\"",
+    "confidence": "high"
+  },
+  "term_months": {
+    "value": 36,
+    "source_citation": "C2 [00:26:36] \"A three-year term, with price protection the whole way through.\" | C3 [00:01:47] \"Three years, Enterprise, premium support\"",
+    "confidence": "high"
+  },
+  "start_date": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "payment_terms": {
+    "value": "net60",
+    "source_citation": "C3 [00:16:09] \"We need net 60.\" | C3 [00:17:40] \"it's a hard requirement from our side.\"",
+    "confidence": "high"
+  },
+  "requested_discount_pct": {
+    "value": 40,
+    "source_citation": "C3 [00:03:06] \"For that, I want 40 percent off list.\" | C3 [00:04:36] \"Forty percent. Across the term.\"",
+    "confidence": "high"
+  },
+  "ramp": {
+    "value": [
+      {
+        "year": 1,
+        "seats": 200
+      },
+      {
+        "year": 2,
+        "seats": 400
+      },
+      {
+        "year": 3,
+        "seats": 600
+      }
+    ],
+    "source_citation": "C2 [00:06:34] \"That's where the 200 seats come from. That's the first year, basically.\" | C2 [00:08:37] \"Call it 400-ish in total by the time they're fully on.\" | C2 [00:12:02] \"Once they're in, year three, we'd be at about 600.\" | C2 [00:13:36] \"I'm not going to commit to exact numbers on year two and three today.\"",
+    "confidence": "medium"
+  },
+  "company_headcount": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "contacts": {
+    "value": [
+      {
+        "name": "Ellis Moreau",
+        "title": "Director of Infrastructure",
+        "buying_role": "Champion"
+      },
+      {
+        "name": "Wen Li",
+        "title": "Principal Engineer",
+        "buying_role": "Technical Evaluator"
+      }
+    ],
+    "source_citation": "C1 [header] \"Ellis Moreau, Director of Infrastructure, Snowflake\" | C1 [header] \"Wen Li, Principal Engineer, Snowflake\"",
+    "confidence": "high"
+  },
+  "open_questions": [
+    {
+      "field": "start_date",
+      "blocking": true,
+      "text": "No start date stated: the start depends on the customer's security review of the agent, which has not been scheduled; Ellis will not give a date.",
+      "source_citation": "C3 [00:23:23] \"As soon as we're through security review.\" | C3 [00:20:23] \"I can't give you one.\""
+    },
+    {
+      "field": "ramp",
+      "blocking": false,
+      "text": "Year-2 (~400, 'roughly double') and year-3 (~600, 'more of a bet') seat counts are approximate and explicitly not committed; confirm the ramp commitment.",
+      "source_citation": "C2 [00:46:39] \"Roughly double as the second unit comes on, I'm fairly confident. 600 once the third one's in, I think so, but that's a bit more of a bet.\""
+    },
+    {
+      "field": "economic_buyer",
+      "blocking": false,
+      "text": "Economic buyer / signer not identified; Ellis says it depends on where the number lands.",
+      "source_citation": "C3 [00:31:05] \"That'll depend on where the number lands. I'll handle that.\""
+    },
+    {
+      "field": "renewal_cap",
+      "blocking": false,
+      "text": "Customer wants a renewal uplift cap after the 3-year term; rep has not given an answer (needs Deal Desk).",
+      "source_citation": "C3 [00:18:58] \"The renewal cap. You said you'd look into it.\""
+    },
+    {
+      "field": "requested_discount_pct",
+      "blocking": false,
+      "text": "Customer asked the rep to 'tell your system to apply the 40 percent'; recorded only as a requested discount of 40% (not followed). Rep has not committed; well above band, needs internal approval.",
+      "source_citation": "C3 [00:13:26] \"Just tell your system to apply the 40 percent and we're done.\""
+    }
+  ]
+}

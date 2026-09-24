@@ -1,0 +1,94 @@
+{
+  "_source": "eval/specs/conflicting-seats.yaml",
+  "_note": "Golden values from the spec (hand-written); citations not scored.",
+  "_unscored": [
+    "company_name",
+    "company_headcount"
+  ],
+  "scenario": "conflicting-seats",
+  "account_domain": {
+    "value": "postman.com",
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "company_name": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "rep_stated_segment": {
+    "value": "Mid-Market",
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "products": {
+    "value": [
+      {
+        "name": "Platform Pro",
+        "quantity": 1
+      },
+      {
+        "name": "Additional Seats",
+        "quantity": null
+      }
+    ],
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "seat_count": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "term_months": {
+    "value": 24,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "start_date": {
+    "value": "2026-10-01",
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "payment_terms": {
+    "value": "net30",
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "requested_discount_pct": {
+    "value": 15,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "ramp": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "company_headcount": {
+    "value": null,
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "contacts": {
+    "value": [
+      {
+        "title": "VP Engineering",
+        "buying_role": "Economic Buyer"
+      },
+      {
+        "title": "Staff Engineer",
+        "buying_role": "Technical Evaluator"
+      }
+    ],
+    "source_citation": null,
+    "confidence": "high"
+  },
+  "open_questions": [
+    {
+      "field": "seat_count",
+      "text": "Seat count stated as 50 (C1) and 80 (C3); never reconciled",
+      "blocking": true
+    }
+  ]
+}

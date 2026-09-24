@@ -1,0 +1,108 @@
+# Scenario 2 of 4 — the conflict.
+# Proves: the skill surfaces contradictions instead of averaging or picking one.
+# The seat count is the single most pricing-critical field in the deal, so a
+# quiet guess here produces a wrong number on a document a customer signs.
+#
+# CRITICAL when generating the transcripts: 50 and 80 must both appear, and
+# nobody may ever reconcile them. No "so let's call it 80 then". No recap at
+# the end. The conversation simply moves on both times.
+
+scenario: conflicting-seats
+account_domain: postman.com            # a seeded account, 200-2000 employees
+rep: Alex Chen
+
+rep_stated_segment: Mid-Market
+
+calls:
+  - id: C1
+    date: 2026-07-29
+    type: Discovery
+    duration_min: 31
+    participants:
+      - Alex Chen (AE)
+      - Priya Raghunathan (VP Engineering)
+    tone: >
+      Early and exploratory. Priya is interested but vague on specifics and
+      says more than once that she needs to check internally. Two tangents:
+      one about a conference they both attended, one about a recent outage.
+    facts_to_embed:
+      - "roughly 50 engineers would need access"
+      - "they are evaluating two other vendors"
+      - "October 1 start, tied to the start of their fiscal quarter"
+
+  - id: C2
+    date: 2026-08-14
+    type: Technical evaluation
+    duration_min: 52
+    participants:
+      - Alex Chen (AE)
+      - Priya Raghunathan (VP Engineering)
+      - Tom Abara (Staff Engineer)
+    tone: >
+      Almost entirely technical. Integration questions, SSO, data residency.
+      Commercials barely come up. Seat count is not mentioned at all in this
+      call.
+    facts_to_embed:
+      - "SSO is a hard requirement"
+      - "they want a two year term for budget predictability"
+      - "Tom pushes on API rate limits"
+
+  - id: C3
+    date: 2026-09-04
+    type: Commercial review
+    duration_min: 28
+    participants:
+      - Alex Chen (AE)
+      - Priya Raghunathan (VP Engineering)
+    tone: >
+      Priya mentions the scope grew, almost in passing, while talking about
+      something else. Alex does not pick up on the change. The call ends on
+      next steps about legal review, not on numbers.
+    facts_to_embed:
+      - "the data team has since been folded into the same org, so it is more like 80 people"
+      - "net 30 terms are fine"
+      - "they are asking for 15 percent off"
+
+planted_defects:
+  - type: conflict
+    field: seat_count
+    values: [50, 80]
+    stated_in: [C1, C3]
+    note: >
+      Never reconciled. Neither speaker acknowledges the change as a change.
+      The extraction must surface both values with their citations rather than
+      choosing one, and must not price the quote on a guess.
+
+expected_extraction:
+  products:
+    - name: Platform Pro
+      quantity: 1
+    - name: Additional Seats
+      quantity: null              # blocked by the conflict
+  term_months: 24
+  start_date: 2026-10-01
+  payment_terms: net30
+  requested_discount_pct: 15
+  seat_count: null                # MUST be null, not 50, not 80, not 65
+  ramp: null
+  contacts:
+    - title: VP Engineering
+      buying_role: Economic Buyer
+    - title: Staff Engineer
+      buying_role: Technical Evaluator
+
+expected_open_questions:
+  - field: seat_count
+    text: "Seat count stated as 50 (C1) and 80 (C3); never reconciled"
+    blocking: true                # pricing cannot proceed without it
+
+expected_preflight:
+  verified_segment: Mid-Market
+  segment_mismatch: false
+  approval_level_required: Manager   # 15% is above the Mid-Market rep band
+  preflight_status: Blocked on Open Questions
+  thresholds_breached: []
+  note: >
+    Status is Blocked rather than Needs Approval. A missing pricing-critical
+    field outranks the approval question: there is no point routing a quote
+    for approval when the quantity is unknown.
