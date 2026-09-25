@@ -12,8 +12,7 @@ PDF and an internal deal brief. It never submits anything to an approval process
 anything to a customer: a human reviews the draft and decides.
 
 The design rationale, scope, personas and production hardening plan are in the separate
-write-up (see [Deliverables](#deliverables)). This README covers how the repo works and how to
-run it.
+write-up. This README covers how the repo works and how to run it.
 
 ## Architecture
 
@@ -376,12 +375,3 @@ exercise. All seeded records carry `Seed_Key__c` (`SEED-...`, demo Opportunities
   `eval/apollo_snapshot/` instead (see [Apollo cache](#apollo-cache)).
 - Standard Quote / QuoteLineItem, not Salesforce CPQ (the org has CPQ licenses, but this project deliberately uses standard Quotes). Single currency,
   no tax. No submission to an approval process.
-
-## Deliverables
-
-| Deliverable | Status |
-|---|---|
-| This repository | Code, skill, tests, eval, demo deal data |
-| Write-up | Separate document: "GTM Quote co-pilot write-up" (problem, scope, design decisions, assumptions, production hardening) |
-| Loom walkthrough | **To record.** Structure: 30 s problem, about 1 min per scenario, ending on the Salesforce Quote record with the pre-flight fields populated. |
-| Granola-recorded mock discovery call | Optional; **not done** |
