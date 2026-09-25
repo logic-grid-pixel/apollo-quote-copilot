@@ -382,6 +382,6 @@ exercise. All seeded records carry `Seed_Key__c` (`SEED-...`, demo Opportunities
 | Deliverable | Status |
 |---|---|
 | This repository | Code, skill, tests, eval, demo deal data |
-| Write-up | Separate document: "Quote Copilot — Apollo GTM Technical Exercise Write-Up" (problem, scope, design decisions, assumptions, production hardening) |
+| Write-up | Separate document: "GTM Quote co-pilot write-up" (problem, scope, design decisions, assumptions, production hardening) |
 | Loom walkthrough | **To record.** Structure: 30 s problem, about 1 min per scenario, ending on the Salesforce Quote record with the pre-flight fields populated. Talk track: [`docs/LOOM_SCRIPT.md`](docs/LOOM_SCRIPT.md) |
 | Granola-recorded mock discovery call | Optional; **not done** |
